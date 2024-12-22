@@ -1,0 +1,8 @@
+#realTime_container{
+    padding: 2rem;
+}
+
+#registerForm label{
+    display: block;
+    margin-top: 1rem;
+}

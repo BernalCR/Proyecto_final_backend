@@ -30,7 +30,6 @@ const productsManager = new ProductsManager();
 // listar
 router.get("/", async (req, res) =>{
     try {
-        console.log("hola")
         const limit = req.query.limit ? parseInt(req.query.limit) : 10;
         const page = req.query.page ? parseInt(req.query.page) : 1;
         let sort = 0;
@@ -40,11 +39,8 @@ router.get("/", async (req, res) =>{
             sort = -1;
         }
 
-        // const sort = req.query.page ? req.query.sort : undefined;
-        // const products = productsManager.getAllProducts(limit, page, sort);
         const products = await productsManager.getAllProducts(limit, page, sort);
         
-        console.log(products)
         res.json(products);
     } catch (error) {
         console.error(error);

@@ -49,28 +49,6 @@ const connectMongoDB = async ()=>{
     try {
         await mongoose.connect('mongodb+srv://bernalcristian2508:admin@cluster0.3jk9u.mongodb.net/Ecomm?retryWrites=true&w=majority&appName=Cluster0');
         console.log("Conectado con exito a MongoDB usando Moongose.");
-
-        /*let nuevoEstudiante = await studentsModel.create({
-            name: "Luis",
-            lastName : "Munar",
-            age : "20",
-        });*/
-
-        /*let nuevoCurso = await coursesModel.create(
-            {
-                title: "Curso Backend",
-                description: "Curso backend de NodeJS",
-                teacherName: "Juan Torres"
-            }
-        );*/
-
-        // let student = await studentsModel.findOne({_id: "640a705f72d18c48ca6f6741"});
-        // console.log(JSON.stringify(student, null, '\t'));
-        //student.courses.push({course: "640a719de27c256369c70d15"});
-        //console.log(JSON.stringify(student));
-        //let result = await studentsModel.updateOne(student);
-        //console.log(result);
-
     } catch (error) {
         console.error("No se pudo conectar a la BD usando Moongose: " + error);
         process.exit();

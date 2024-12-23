@@ -8,25 +8,6 @@ import cartsModel from "./models/carts.model.js";
 import productModel from "./models/products.model.js";
 
 export default class CartManager{
-    // constructor(){
-    //     this.carts = [];
-    //     this.init();
-    // }
-
-    // async init(){
-    //     try {
-    //         const data = await fs.readFile(cartsFilePath, "utf-8")
-    //         this.carts = JSON.parse(data);
-    //     } catch (error) {
-    //         this.carts = [];
-    //     }
-    // }
-
-    // async saveFile(){
-    //     const jsonData = JSON.stringify(this.carts, null, 2);
-    //     await fs.writeFile(cartsFilePath, jsonData)
-    // }
-
     constructor() { 
         console.log("Working students with Database persistence in mongodb");
     }
@@ -45,7 +26,7 @@ export default class CartManager{
 
         // return newCart;
 
-        let newCart = await cartsModel.create(prod);
+        let newCart = await cartsModel.create({});
         return newCart;
     }
 
@@ -64,32 +45,48 @@ export default class CartManager{
         // const cart = this.carts.find(cart => cart.id === cartId);
         // if (!cart) return {status: "error", msg: "carrito no existe"};
 
-        let cart = await cartsModel.findOne({ _id: id });
+        let cart = await cartsModel.findOne({ _id: cartId });
         if (!cart) return {status: "error", msg: "carrito no existe"};
-
 
         // Validacion de que el id del producto exista
         // const productToAdd = allProducts.find(product => product.id === productId)
         // if(!productToAdd) return {status: "error", msg: "Producto no existe"};
 
-        let prod = await productModel.findOne({ _id: id });
-        if(!prod    ) return {status: "error", msg: "Producto no existe"};
+        let prod = await productModel.findOne({ _id: productId });
+        if(!prod) return {status: "error", msg: "Producto no existe"};
 
         const productsCard = cart.products;
-        const index = productsCard.findIndex(prod => prod.product === productId);
+        const index = productsCard.findIndex(prod => prod.product._id.toString().includes(productId));
+
         if(index === -1){
+            console.log("pas porrr")
             const newProduct = {
                 product: productId,
                 quantity: 1,
             }
 
             // productsCard.push(newProduct);
-            cartsModel.create(newProduct);
+            // cartsModel.create(newProduct);
+
+            // Usamos $push para agregar un nuevo producto al array
+            // cartsModel.findByIdAndUpdate( cartId, { $push: { products: newProduct }});
+
+                const updatedCart = await cartsModel.findByIdAndUpdate(
+                  cartId,
+                  { $push: { products: newProduct } }
+                );
+            
+                // console.log('Carrito actualizado:', updatedCart);
+              
+
         }else{
-            cartsModel.updateOne(
-                { _id: cartId }, 
-                { $inc: { quantity: 1 } }
-            );
+            const updatedCart = await cartsModel.findByIdAndUpdate( cartId, { $inc: { quantity: 1 } } );
+            console.log("pas porrr 2")
+            console.log('Carrito actualizado:', updatedCart);
+            // cartsModel.updateOne(
+            //     { _id: cartId }, 
+            //     { $inc: { quantity: 1 } }
+            // );
             // productsCard[index].quantity += 1;
         }
 

@@ -31,7 +31,7 @@ router.post("/", async(req, res) =>{
 // Obtener productos de carrito
 router.get("/:pid", async(req, res) =>{
     try {
-        const id = parseInt(req.params.pid);
+        const id = req.params.pid;
         const cart = await cartManager.getCart(id);
 
         if(!cart) return res.status(400).send("Carrito no encontrado");
@@ -45,8 +45,8 @@ router.get("/:pid", async(req, res) =>{
 // Agregar producto a carrito
 router.post("/:cid/product/:pid", async(req, res) =>{
     try {
-        const cartId = parseInt(req.params.cid);
-        const productId = parseInt(req.params.pid);
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
         const response = await cartManager.addProductToCart(cartId, productId);
         const msg = `Status: ${response.status}. Mensaje: ${response.msg}`
         return (response.status === "error") ? res.status(400).send(msg) : res.send(msg); 

@@ -35,8 +35,8 @@ app.get("/ping", (req, res) =>{
 })
 
 app.use("/api/products", productsRouter)
-app.use("/api/cart", cartsRouter)
-app.use("/products", viewRoutes)
+app.use("/api/carts", cartsRouter)
+app.use("/", viewRoutes)
 
 
 app.listen(PORT, ()=>{

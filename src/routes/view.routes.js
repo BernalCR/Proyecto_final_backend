@@ -11,8 +11,12 @@ const router = Router();
 
 // Además, agregar una vista en ‘/carts/:cid (cartId) para visualizar un carrito específico, donde se deberán listar SOLO los productos que pertenezcan a dicho carrito. 
 
-router.get("/", (req,res) =>{
-    fetch('http://localhost:8080/api/products/')
+router.get("/products", (req,res) =>{
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const sort = req.query.sort ? req.query.sort : "none";
+
+    fetch(`http://localhost:8080/api/products/?page=${page}&limit=${limit}&sort=${sort}`)
     .then(response => {
         if (!response.ok) {
             throw new Error('Error en la creación del producto');
@@ -20,11 +24,25 @@ router.get("/", (req,res) =>{
         return response.json(); // Parsear la respuesta a JSON
     })
     .then(data => {
-        res.render('home', {productsArray: data});
+        res.render('products', data);
     })
 });
-router.get("/realtime", (req,res) =>{
-    res.render('realTimeProducts', {});
+
+router.get("/carts/:cid", (req,res) =>{
+    const cartId = req.params.cid;
+    fetch(`http://localhost:8080/api/carts/${cartId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la creación del producto');
+        }
+        return response.json(); // Parsear la respuesta a JSON
+    })
+    .then(data => {
+        console.log('============')
+        console.log(data.products)
+        res.render('carts', {array: data.products});
+    })
 });
+
 
 export default router;

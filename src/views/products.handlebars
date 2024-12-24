@@ -1,0 +1,32 @@
+{{#if isValid}}
+
+{{#each docs}}
+<div>
+    <p> Name: {{this.name}}</p>
+    <p> Price: {{this.price}}</p>
+    <p> Description: {{this.description}}</p>
+</div>
+<br/>
+<br/>
+{{/each}}
+
+<div>
+    {{#if hasPrevPage}}
+        <a href={{this.prevLink}}>prev </a>
+    {{/if}}
+
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+
+    {{#if hasNextPage}}
+        <a href={{this.nextLink}}>next</a>
+    {{/if}}
+</div>
+
+{{else}}
+<h1>No hay productos para mostrar</h1>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+{{!-- <script src="/js/home.js"></script> --}}

@@ -24,7 +24,7 @@ export default class CartManager{
         if(!prod) return {status: "error", msg: "Producto no existe"};
 
         const exist = await cartsModel.findOne({ _id: cartId, 'products.product': productId });
-        console.log(exist);
+
         if(exist){
             const updatedCart = await cartsModel.updateOne(
                 { _id: cartId, 'products.product': productId },  // Filtrar por el carrito y el _id del producto dentro del arreglo
@@ -36,6 +36,44 @@ export default class CartManager{
             const updatedCart = await cartsModel.findByIdAndUpdate(cartId, {$push: { products: newProduct }} );
             return {status: "success", msg: updatedCart};
         }
+    }
+
+    async emptyCart(cartId){
+        let cart = await cartsModel.findOne({ _id: cartId });
+        if (!cart) return {status: "error", msg: "carrito no existe"};
+
+        const result = await cartsModel.updateOne(
+            { _id: cartId },
+            { $set: { products: [] } } 
+          );
+        return {status: "success", msg: result };
+    }
+
+    async deleteProduct(cartId, productId){
+        let cart = await cartsModel.findOne({ _id: cartId });
+        if (!cart) return {status: "error", msg: "carrito no existe"};
+
+        let prod = await cartsModel.findOne({ _id: cartId, 'products.product': productId });
+        if(!prod) return {status: "error", msg: "Producto no esta en el carrito"};
+
+        // const deletedProduct = await cartsModel.deleteOne({ _id: cartId, 'products.product': productId })
+        const deletedProduct = await cartsModel.updateOne(
+            { _id: cartId },          
+            { $pull: { products: { product: productId } } }
+        );
+        return {status: "success", msg: deletedProduct };
+    }
+
+    async updateCart(cartId, array){
+        console.log(array)
+        // let cart = await cartsModel.findOne({ _id: cartId });
+        // if (!cart) return {status: "error", msg: "carrito no existe"};
+
+        // const result = await cartsModel.updateOne(
+        //     { _id: cartId },
+        //     { $set: { products: [] } } 
+        //   );
+        // return {status: "success", msg: result };
     }
 }
 

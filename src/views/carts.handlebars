@@ -1,0 +1,14 @@
+
+{{#each array}}
+<div>
+    <p> Name: {{this.product.name}}</p>
+    <p> Price: {{this.product.price}}</p>
+    <p> Description: {{this.product.description}}</p>
+    <p>Quantity: {{this.quantity}}</p>
+</div>
+<br/>
+
+{{/each}}
+
+<script src="/socket.io/socket.io.js"></script>
+{{!-- <script src="/js/home.js"></script> --}}

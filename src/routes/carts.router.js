@@ -17,6 +17,21 @@ const router = Router();
 
 const cartManager = new CartManager();
 
+
+// Obtener productos de carrito
+router.get("/:cid", async(req, res) =>{
+    try {
+        const cartId = req.params.cid;
+        const cart = await cartManager.getCart(cartId);
+
+        if(!cart) return res.status(400).send("Carrito no encontrado");
+        
+        res.json(cart);
+    } catch (error) {
+        console.error(error);
+    }
+})
+
 // Crear carrito
 router.post("/", async(req, res) =>{
     console.log("paso")
@@ -28,22 +43,8 @@ router.post("/", async(req, res) =>{
     }
 })
 
-// Obtener productos de carrito
-router.get("/:pid", async(req, res) =>{
-    try {
-        const id = req.params.pid;
-        const cart = await cartManager.getCart(id);
-
-        if(!cart) return res.status(400).send("Carrito no encontrado");
-        
-        res.json(cart);
-    } catch (error) {
-        console.error(error);
-    }
-})
-
 // Agregar producto a carrito
-router.post("/:cid/product/:pid", async(req, res) =>{
+router.post("/:cid/products/:pid", async(req, res) =>{
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -55,5 +56,40 @@ router.post("/:cid/product/:pid", async(req, res) =>{
     }
 })
 
+router.delete('/:cid', async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        const result = await cartManager.emptyCart(cartId);
+        const msg = `Status: ${result.status}. Mensaje: ${result.msg}`
+        return (result.status === "error") ? res.status(400).send(msg) : res.send(msg); 
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+router.delete('/:cid/products/:pid', async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+        const deletedProduct = await cartManager.deleteProduct(cartId, productId);
+        const msg = `Status: ${deletedProduct.status}. Mensaje: ${deletedProduct.msg}`
+        return (deletedProduct.status === "error") ? res.status(400).send(msg) : res.send(msg); 
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+router.put("/:cid", async(req, res) =>{
+    try {
+        const cartId = req.params.cid;
+        const updatedCart = await productsManager.updateCart(cartId, req.body);
+
+        const msg = `Status: ${updatedCart.status}. Mensaje: ${updatedCart.msg}`
+        return (updatedCart.status === "error") ? res.status(400).send(msg) : res.send(msg); 
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export default router;

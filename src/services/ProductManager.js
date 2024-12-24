@@ -7,18 +7,17 @@ export default class ProductsManager{
     }
 
     async getAllProducts (limit, page, sort){
-        let paginate = await productModel.paginate({}, {limit: limit, page: page});
-        let products = paginate.docs;
+        let paginate = await productModel.paginate({}, {limit: limit, page: page, lean: true});
         
-        if (sort === 1) {
+        if (sort === "asc") {
             // Ordenar de menor a mayor
-            products.sort((a, b) => a.price - b.price);
-        } else if (sort === -1) {
+            paginate.docs.sort((a, b) => a.price - b.price);
+        } else if (sort === "desc") {
             // Ordenar de mayor a menor
-            products.sort((a, b) => b.price - a.price);
+            paginate.docs.sort((a, b) => b.price - a.price);
         }
 
-        return products.map(prod=>prod.toObject());
+        return paginate;
     }
 
     async getProductById(id){

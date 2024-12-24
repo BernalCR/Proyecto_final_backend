@@ -94,5 +94,19 @@ router.put("/:cid/products/:pid", async(req, res) =>{
         console.log(error);
     }
 })
+router.put("/:cid", async(req, res) =>{
+    try {
+        const cartId = req.params.cid;
+        const newProducts = req.body
+
+        const updatedCart = await cartManager.updateCart(cartId, newProducts);
+
+        const msg = `Status: ${updatedCart.status}. Mensaje: ${updatedCart.msg}`
+        return (updatedCart.status === "error") ? res.status(400).send(msg) : res.send(msg); 
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export default router;

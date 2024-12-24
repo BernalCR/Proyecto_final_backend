@@ -1,3 +1,4 @@
+
 import cartsModel from "./models/carts.model.js";
 import productModel from "./models/products.model.js";
 
@@ -65,12 +66,19 @@ export default class CartManager{
     }
 
     async updateQuantity(cartId, productId, newQuantity){
-        
         const updatedCart = await cartsModel.updateOne(
             { _id: cartId, 'products.product': productId },  // Filtrar por el carrito y el _id del producto dentro del arreglo
             { $set: { 'products.$.quantity': newQuantity } }  // Incrementar la cantidad del producto encontrado
         );
         return {status: "success", msg: updatedCart};
+    }
+
+    async updateCart(cartId, newProducts){
+        const updatedCart = await cartsModel.updateOne(
+            { _id: cartId },
+            { $set: { products: newProducts } } 
+          );
+        return {status: "success", msg: updatedCart };
     }
 }
 

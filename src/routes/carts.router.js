@@ -79,10 +79,13 @@ router.delete('/:cid/products/:pid', async (req, res) => {
     }
 })
 
-router.put("/:cid", async(req, res) =>{
+router.put("/:cid/products/:pid", async(req, res) =>{
     try {
         const cartId = req.params.cid;
-        const updatedCart = await productsManager.updateCart(cartId, req.body);
+        const productId = req.params.pid;
+        const newQuantity = req.body.quantity
+
+        const updatedCart = await cartManager.updateQuantity(cartId, productId, newQuantity);
 
         const msg = `Status: ${updatedCart.status}. Mensaje: ${updatedCart.msg}`
         return (updatedCart.status === "error") ? res.status(400).send(msg) : res.send(msg); 

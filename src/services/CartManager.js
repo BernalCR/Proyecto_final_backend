@@ -64,16 +64,13 @@ export default class CartManager{
         return {status: "success", msg: deletedProduct };
     }
 
-    async updateCart(cartId, array){
-        console.log(array)
-        // let cart = await cartsModel.findOne({ _id: cartId });
-        // if (!cart) return {status: "error", msg: "carrito no existe"};
-
-        // const result = await cartsModel.updateOne(
-        //     { _id: cartId },
-        //     { $set: { products: [] } } 
-        //   );
-        // return {status: "success", msg: result };
+    async updateQuantity(cartId, productId, newQuantity){
+        
+        const updatedCart = await cartsModel.updateOne(
+            { _id: cartId, 'products.product': productId },  // Filtrar por el carrito y el _id del producto dentro del arreglo
+            { $set: { 'products.$.quantity': newQuantity } }  // Incrementar la cantidad del producto encontrado
+        );
+        return {status: "success", msg: updatedCart};
     }
 }
 

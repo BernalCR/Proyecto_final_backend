@@ -3,7 +3,6 @@ import handlebars from "express-handlebars"
 import __dirname from "./utils.js";
 
 import mongoose from "mongoose";
-import productModel from "./services/models/products.model.js"
 
 // import { Server } from "socket.io";
 

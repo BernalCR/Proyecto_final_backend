@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "ab14344d-ea3e-41a0-a778-7df98ded0885",
+		"name": "Proyecto final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39830581"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "/api/products/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/products/"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products?limit=num",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/?sort=asc&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "asc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/:1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								":1"
+							],
+							"variable": [
+								{
+									"key": "1",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"title\": \"Comida para gato\",\r\n    \"description\": \"la mas nutritiva para perros\",\r\n    \"code\": \"asdasd\",\r\n    \"price\": 19.99,\r\n    \"stock\": 50,\r\n    \"category\": \"comida\",\r\n    \"thumbnails\": [\r\n      \"https://example.com/images/mascotas.jpg\",\r\n      \"https://example.com/images/mascotas.jpg\"\r\n    ]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/products/"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/:1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								":1"
+							],
+							"variable": [
+								{
+									"key": "1",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/products/6768653be91507900e2a90d5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "/api/carts/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/api/carts/"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d/products/676848b811f4ca517f64f0b5"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d/products/676848b811f4ca517f64f0ac"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"name\": \"Producto 32\",\r\n    \"price\": \"100\",\r\n    \"description\": \"Descripción del producto 32\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/carts/6768e6618a67261cc1ace27d/products/676848b811f4ca517f64f0a9"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

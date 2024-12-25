@@ -4,8 +4,6 @@ import __dirname from "./utils.js";
 
 import mongoose from "mongoose";
 
-// import { Server } from "socket.io";
-
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewRoutes from "./routes/view.routes.js";

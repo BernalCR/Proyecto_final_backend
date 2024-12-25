@@ -1,4 +1,4 @@
-# Proyecto de Gestión de Productos
+# Proyecto final backend modulo 1
 
 Este proyecto es una aplicación desarrollada con **Express** que permite la gestión eficiente de productos, incluyendo funcionalidades como paginación y visualización de datos en vistas dinámicas. Está optimizado para trabajar con bases de datos MongoDB y tiene una documentación clara de los endpoints.
 
